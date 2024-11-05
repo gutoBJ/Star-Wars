@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Wars Planets - BJ</title>
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="shortcut icon" href="./assets/millennium-falcon.png" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <a href="./planets.html">
+                    <div class="logo">
+                        <img src="./assets/star-wars-logo.png" alt="Logo Stars Wars" class="logo-img">
+
+                        <span class="logo-text">planets</span>
+                    </div>
+                </a>
+
+                <div class="navigation">
+                    <a href="./index.html">
+                        <li>characters</li>
+                    </a>
+
+                    <a href="./planets.html">
+                        <li class="select">planets</li>
+                    </a>
+
+                    <a href="./starships.html">
+                        <li>starships</li>
+                    </a>
+                </div>
+
+                <div class="social-media">
+                    <a href="https://www.instagram.com/augustobj_dev" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a target="_blank" href="https://www.facebook.com/profile.php?id=100092660496401">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a target="_blank" href="https://github.com/gutoBJ">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a target="_blank" href="https://www.linkedin.com/in/augusto-chupernate-29a767253/">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <h2>conheca os planetas de star wars em um so lugar</h2>
+
+        <div class="main-content" id="main-content">
+
+        </div>
+
+        <div class="modal" id="modal" onclick="hideModal()">
+            <div class="modal-content" id="modal-content"></div>
+        </div>
+
+        <div class="buttons">
+            <button id="back-button" disabled>Anterior</button>
+            <p class="paginas"><span id="page-atual">1</span> / <span id="page-total">6</span></p>
+            <button id="next-button" disabled>Próxima</button>
+        </div>
+
+    </div>
+
+
+    <footer>
+        <div class="alinhar-textos">
+            <p class="footer-logo">star wars characters</p>
+            <p class="copyright">Desenvolvido por &copy; Guto BJ</p>
+        </div>
+
+
+        <div class="navigation2">
+            <a href="./index.html">
+                <li>characters</li>
+            </a>
+            
+            <a href="./planets.html">
+                <li>planets</li>
+            </a>
+
+            <a href="./starships.html">
+                <li>starships</li>
+            </a>
+        </div>
+
+        <div class="social-media2">
+            <a href="https://www.instagram.com/augustobj_dev" target="_blank">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a target="_blank" href="https://www.facebook.com/profile.php?id=100092660496401">
+                <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a target="_blank" href="https://github.com/gutoBJ">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a target="_blank" href="https://www.linkedin.com/in/augusto-chupernate-29a767253/">
+                <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/664287d9ba.js" crossorigin="anonymous"></script>
+    <script src="./planets.js"></script>
+</body>
+</html>
