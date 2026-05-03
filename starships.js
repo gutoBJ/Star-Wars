@@ -1,7 +1,9 @@
-let currentPageUrl = 'https://swapi.dev/api/starships/'
+let currentPageUrl = 'https://swapi.py4e.com/api/starships/'
 
 const nextButton = document.getElementById('next-button')
 const backButton = document.getElementById('back-button')
+const pageAtualSpan = document.getElementById('page-atual');
+const pageTotal = document.getElementById('page-total')
 
 window.onload = async () => { /* window.onload => Toda vez que a página 
 for carregada ou recarregada vai ser chamada essa função 
@@ -25,9 +27,22 @@ async function loadCharacters(url) {
     const mainContent = document.getElementById('main-content')
     mainContent.innerHTML = ''; // Limpar os resultados anteriores
 
+    const urlParams = new URL(url);
+    const pageNumber = urlParams.searchParams.get('page') || '1';
+
+    if (pageAtualSpan) {
+        pageAtualSpan.innerText = pageNumber;
+    }
+
     try {
         const response = await fetch(url)
         const responseJson = await response.json();
+
+        const totalPages = Math.ceil(responseJson.count / 10);
+
+        if (pageTotal) {
+            pageTotal.innerText = totalPages;
+        }
 
         responseJson.results.forEach((starships) => {
             const card = document.createElement('div')
@@ -105,41 +120,33 @@ async function loadCharacters(url) {
 
 
 async function loadNextPage() {
-    if (!currentPageUrl) return; // se o valor dessa variavel for nulo, for false, for inexistente vai dar um return -> vai interromper a execução da função
-    
     try {
-        let pageAtual = document.getElementById('page-atual')
-        const response = await fetch(currentPageUrl)
-        const responseJson = await response.json()
+        const response = await fetch(currentPageUrl);
+        const responseJson = await response.json();
 
-        await loadCharacters(responseJson.next)
-
-        pageAtual.innerText = +pageAtual.innerText + 1
-
-
+        if (responseJson.next) {
+            await loadCharacters(responseJson.next);
+        }
     } catch (error) {
-        console.log(error)
-        alert('Erro ao carregar a próxima página')
+        console.log(error);
+        alert('Erro ao carregar a próxima página');
     }
 }
 
 async function loadPreviousPage() {
-    if (!currentPageUrl) return; // return -> vai interromper a execução da função
-
     try {
-        let pageAtual = document.getElementById('page-atual')
-        const response = await fetch(currentPageUrl)
-        const responseJson = await response.json()
+        const response = await fetch(currentPageUrl);
+        const responseJson = await response.json();
 
-        await loadCharacters(responseJson.previous)
-
-        pageAtual.innerText = +pageAtual.innerText - 1
-
+        if (responseJson.previous) {
+            await loadCharacters(responseJson.previous);
+        }
     } catch (error) {
-        console.log(error)
-        alert('Erro ao carregar a página anterior')
+        console.log(error);
+        alert('Erro ao carregar a página anterior');
     }
 }
+
 
 function hideModal() {
     const modal = document.getElementById('modal')

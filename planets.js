@@ -1,7 +1,9 @@
-let currentPageUrl = 'https://swapi.dev/api/planets/'
+let currentPageUrl = 'https://swapi.py4e.com/api/planets/'
 
 const nextButton = document.getElementById('next-button')
 const backButton = document.getElementById('back-button')
+const pageAtualSpan = document.getElementById('page-atual');
+const pageTotal = document.getElementById('page-total')
 
 window.onload = async () => {
     try {
@@ -20,9 +22,22 @@ async function loadPlanets(url) {
     const mainContent = document.getElementById('main-content')
     mainContent.innerHTML = '';
 
+    const urlParams = new URL(url);
+    const pageNumber = urlParams.searchParams.get('page') || '1';
+
+    if (pageAtualSpan) {
+        pageAtualSpan.innerText = pageNumber;
+    }
+
     try {
         const response = await fetch(url)
         const responseJson = await response.json()
+
+        const totalPages = Math.ceil(responseJson.count / 10);
+
+        if (pageTotal) {
+            pageTotal.innerText = totalPages;
+        }
 
         responseJson.results.forEach((planets) => {
             const card = document.createElement('div')
@@ -86,8 +101,8 @@ async function loadPlanets(url) {
         nextButton.disabled = !responseJson.next
         backButton.disabled = !responseJson.previous
 
-        backButton.style.visibility = responseJson.previous? 'visible' : 'hidden'
-        nextButton.style.visibility = responseJson.next? 'visible' : 'hidden'
+        backButton.style.visibility = responseJson.previous ? 'visible' : 'hidden'
+        nextButton.style.visibility = responseJson.next ? 'visible' : 'hidden'
 
         currentPageUrl = url
 
@@ -99,41 +114,31 @@ async function loadPlanets(url) {
 }
 
 async function loadNextPage() {
-    if (!currentPageUrl) return;
-
     try {
-        let pageAtual = document.getElementById('page-atual')
-        let pageTotal = document.getElementById('page-total')
-        const response = await fetch(currentPageUrl)
-        const responseJson = await response.json()
+        const response = await fetch(currentPageUrl);
+        const responseJson = await response.json();
 
-        pageTotal = nextButton.style ? 'disabled' : ''
-
-        await loadPlanets(responseJson.next)
-
-        pageAtual.innerText = +pageAtual.innerText + 1
+        if (responseJson.next) {
+            await loadPlanets(responseJson.next);
+        }
     } catch (error) {
-        console.log(error)
-        alert('Erro ao carregar próxima página')
+        console.log(error);
     }
 }
 
 async function loadBackPage() {
-    if (!currentPageUrl) return;
-
     try {
-        let pageAtual = document.getElementById('page-atual')
-        const response = await fetch(currentPageUrl)
-        const responseJson = await response.json()
+        const response = await fetch(currentPageUrl);
+        const responseJson = await response.json();
 
-        await loadPlanets(responseJson.previous)
-
-        pageAtual.innerText = +pageAtual.innerText - 1
+        if (responseJson.previous) {
+            await loadPlanets(responseJson.previous);
+        }
     } catch (error) {
-        console.log(error)
-        alert('Erro ao carregar página anterior')
+        console.log(error);
     }
 }
+
 
 function hideModal() {
     const modal = document.getElementById('modal')
